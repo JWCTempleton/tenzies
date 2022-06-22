@@ -11,12 +11,19 @@ function App() {
     return numArray;
   }
 
+  function handleRoll() {
+    setDice(allNewDice());
+  }
+
   const [dice, setDice] = React.useState(allNewDice());
 
   const diceElement = dice.map((die) => <Die value={die} />);
   return (
     <main>
       <div className="dice-container">{diceElement}</div>
+      <button className="roll-button" onClick={handleRoll}>
+        Roll Dice
+      </button>
     </main>
   );
 }
