@@ -1,6 +1,7 @@
 import "./App.css";
 import Die from "./Die";
 import React from "react";
+import { nanoid } from "nanoid";
 
 function App() {
   function allNewDice() {
@@ -12,6 +13,7 @@ function App() {
     const numObject = numArray.map((num) => ({
       value: num,
       isHeld: false,
+      id: nanoid(),
     }));
     return numObject;
   }
@@ -22,7 +24,9 @@ function App() {
 
   const [dice, setDice] = React.useState(allNewDice());
 
-  const diceElement = dice.map((die) => <Die value={die.value} />);
+  const diceElement = dice.map((die) => (
+    <Die key={die.id} value={die.value} isHeld={die.isHeld} />
+  ));
   return (
     <main>
       <div className="dice-container">{diceElement}</div>
