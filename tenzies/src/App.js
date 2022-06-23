@@ -8,7 +8,15 @@ function App() {
   const [tenzies, setTenzies] = React.useState(false);
 
   React.useEffect(() => {
-    console.log("Dice state changed");
+    const allHeld = dice.every((die) => die.isHeld);
+    const firstValue = dice[0].value;
+    const allSame = dice.every((die) => die.value === firstValue);
+
+    if (allHeld && allSame) {
+      setTenzies(true);
+    } else {
+      return;
+    }
   }, [dice]);
 
   function allNewDice() {
@@ -62,6 +70,7 @@ function App() {
         current value between rolls.
       </p>
       <div className="dice-container">{diceElement}</div>
+      {tenzies && <h2>You Won!</h2>}
       <button className="roll-button" onClick={handleRoll}>
         Roll Dice
       </button>
