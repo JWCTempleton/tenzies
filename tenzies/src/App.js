@@ -6,6 +6,10 @@ import { nanoid } from "nanoid";
 function App() {
   const [dice, setDice] = React.useState(allNewDice());
 
+  React.useEffect(() => {
+    console.log("Dice state changed");
+  }, [dice]);
+
   function allNewDice() {
     const numArray = [];
     for (let i = 0; i < 10; i++) {
@@ -16,6 +20,7 @@ function App() {
       value: num,
       isHeld: false,
       id: nanoid(),
+      tenzies: false,
     }));
     return numObject;
   }
