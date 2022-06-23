@@ -4,6 +4,8 @@ import React from "react";
 import { nanoid } from "nanoid";
 
 function App() {
+  const [dice, setDice] = React.useState(allNewDice());
+
   function allNewDice() {
     const numArray = [];
     for (let i = 0; i < 10; i++) {
@@ -19,14 +21,25 @@ function App() {
   }
 
   function handleRoll() {
-    setDice(allNewDice());
+    setDice((prevDice) =>
+      prevDice.map((die) =>
+        !die.isHeld ? { ...die, value: Math.floor(Math.random() * 6) + 1 } : die
+      )
+    );
   }
 
   function holdDice(id) {
-    console.log(id);
+    setDice((prevSet) => {
+      return prevSet.map((die) => {
+        return die.id === id
+          ? {
+              ...die,
+              isHeld: !die.isHeld,
+            }
+          : die;
+      });
+    });
   }
-
-  const [dice, setDice] = React.useState(allNewDice());
 
   const diceElement = dice.map((die) => (
     <Die
