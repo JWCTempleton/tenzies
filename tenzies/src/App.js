@@ -2,6 +2,7 @@ import "./App.css";
 import Die from "./Die";
 import React from "react";
 import { nanoid } from "nanoid";
+import Confetti from "react-confetti";
 
 function App() {
   const [dice, setDice] = React.useState(allNewDice());
@@ -86,6 +87,7 @@ function App() {
           New Game?
         </button>
       )}
+      {tenzies && <Confetti />}
     </main>
   );
 }
