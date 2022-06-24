@@ -7,7 +7,7 @@ import Confetti from "react-confetti";
 function App() {
   const [dice, setDice] = React.useState(allNewDice());
   const [tenzies, setTenzies] = React.useState(false);
-  const [round, setRound] = React.useState(0);
+  const [round, setRound] = React.useState(1);
 
   React.useEffect(() => {
     const allHeld = dice.every((die) => die.isHeld);
@@ -20,6 +20,16 @@ function App() {
       return;
     }
   }, [dice]);
+
+  React.useEffect(() => {
+    if (tenzies) {
+      if (localStorage.getItem("score") === null) {
+        localStorage.setItem("score", round);
+      } else if (localStorage.getItem("score") > round) {
+        localStorage.setItem("score", round);
+      }
+    }
+  }, [tenzies]);
 
   function allNewDice() {
     const numArray = [];
@@ -74,7 +84,7 @@ function App() {
       </p>
       <div className="dice-container">{diceElement}</div>
       {tenzies && <h2>You Won!</h2>}
-      {round > 0 && <h2>Rolls: {round}</h2>}
+      {round > 1 && <h2>Rolls: {round}</h2>}
       {!tenzies ? (
         <button className="roll-button" onClick={handleRoll}>
           Roll Dice
@@ -85,11 +95,16 @@ function App() {
           onClick={() => {
             setDice(allNewDice());
             setTenzies(false);
-            setRound(0);
+            setRound(1);
           }}
         >
           New Game?
         </button>
+      )}
+      {localStorage.getItem("score") && (
+        <p className="best-round">
+          Best round: {localStorage.getItem("score")} rolls
+        </p>
       )}
       {tenzies && <Confetti />}
     </main>
