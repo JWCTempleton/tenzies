@@ -71,9 +71,21 @@ function App() {
       </p>
       <div className="dice-container">{diceElement}</div>
       {tenzies && <h2>You Won!</h2>}
-      <button className="roll-button" onClick={handleRoll}>
-        Roll Dice
-      </button>
+      {!tenzies ? (
+        <button className="roll-button" onClick={handleRoll}>
+          Roll Dice
+        </button>
+      ) : (
+        <button
+          className="roll-button"
+          onClick={() => {
+            setDice(allNewDice());
+            setTenzies(false);
+          }}
+        >
+          New Game?
+        </button>
+      )}
     </main>
   );
 }
